@@ -1,0 +1,84 @@
+package com.example.demo.controller;
+
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.model.TrainingSession;
+import com.example.demo.repository.TrainingSessionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
+@RestController
+@CrossOrigin
+@RequestMapping("/api")
+public class TrainingSessionController {
+
+
+    @Autowired
+    private TrainingSessionRepository trainingSessionRepository;
+
+    //get all training session api
+    @GetMapping("/trainingSessions")
+
+    public List<TrainingSession> getAllTrainingSession() {
+        return trainingSessionRepository.findAll();
+    }
+
+    //add training session
+    @PostMapping("/trainingSessions")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
+    public TrainingSession createTrainingSession(@RequestBody TrainingSession trainingSession) {
+        return trainingSessionRepository.save(trainingSession);
+    }
+
+    //get training session by id
+    @GetMapping("/trainingSessions/{id}")
+
+    public ResponseEntity<TrainingSession> getTrainingSessionById(@PathVariable Long id) {
+        TrainingSession trainingSession = trainingSessionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Training Session Not Found"));
+        return ResponseEntity.ok(trainingSession);
+    }
+
+
+    //update training session
+    @PutMapping("/trainingSessions/{id}")
+
+    public ResponseEntity<TrainingSession> updateTrainingSession(@PathVariable Long id, @RequestBody TrainingSession trainingSessionDetails) {
+        TrainingSession trainingSession = trainingSessionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Training Session Not Found")
+                );
+        trainingSession.setSessionName(trainingSessionDetails.getSessionName());
+        trainingSession.setStartDate(trainingSessionDetails.getStartDate());
+        trainingSession.setDuration(trainingSessionDetails.getDuration());
+        trainingSession.setMaxParticipants(trainingSessionDetails.getMaxParticipants());
+        trainingSession.setBufferTime(trainingSessionDetails.getBufferTime());
+        trainingSession.setIfsApplicationVersion(trainingSessionDetails.getIfsApplicationVersion());
+        trainingSession.setManagerComment(trainingSessionDetails.getManagerComment());
+        trainingSession.setDeliveryMethod(trainingSessionDetails.getDeliveryMethod());
+
+
+        TrainingSession updateTrainingSession = trainingSessionRepository.save(trainingSession);
+        return ResponseEntity.ok(updateTrainingSession);
+
+    }
+
+    //delete training session
+    @DeleteMapping("/trainingSessions/{id}")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
+    public ResponseEntity<Map<String, Boolean>> deleteTrainingSession(@PathVariable Long id) {
+        TrainingSession trainingSession = trainingSessionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Training Session Not Found")
+                );
+
+        trainingSessionRepository.delete(trainingSession);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return ResponseEntity.ok(response);
+    }
+}

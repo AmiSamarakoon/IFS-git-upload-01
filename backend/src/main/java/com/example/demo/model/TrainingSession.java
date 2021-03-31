@@ -1,38 +1,58 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="training_session")
 public class TrainingSession {
 
+
+    @javax.persistence.Transient
+    public long [] trainerids;
+
+
+    @javax.persistence.Transient
+    public String[] vmIds;
+
+    public String[] getVmIds() {
+        return vmIds;
+    }
+
+    public void setVmIds(String[] vmIds) {
+        this.vmIds = vmIds;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="session_name")
+    @Column(name = "session_name")
     private String sessionName;
 
-    @Column(name="start_date")
+    @Column(name = "start_date")
     private Date startDate;
 
-    @Column(name="duration")
+    @Column(name = "duration")
     private int duration;
 
-    @Column(name="max_participants")
+    @Column(name = "max_participants")
     private int maxParticipants;
 
-    @Column(name="ifs_application_version")
+    @Column(name = "ifs_application_version")
     private String ifsApplicationVersion;
 
-    @Column(name="buffer_time")
+    @Column(name = "buffer_time")
     private int bufferTime;
 
-    @Column(name="manager_comments")
+    @Column(name = "manager_comments")
     private String managerComment;
 
-    @Column(name="delivery_method")
+    @Column(name = "delivery_method")
     private String deliveryMethod;
 
 
@@ -129,4 +149,87 @@ public class TrainingSession {
     public void setDeliveryMethod(String deliveryMethod) {
         this.deliveryMethod = deliveryMethod;
     }
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
+            name = "training_session_virtual_machine",
+            joinColumns = @JoinColumn(name = "s_id"),
+            inverseJoinColumns = @JoinColumn(name = "vm_id")
+    )
+    @JsonIgnoreProperties("trainingSessions")
+    private List<VirtualMachine> virtualMachines;
+
+
+    public List<VirtualMachine> getVirtualMachines() {
+        return virtualMachines;
+    }
+
+    public void setVirtualMachines(List<VirtualMachine> virtualMachines) {
+        this.virtualMachines = virtualMachines;
+    }
+
+
+    //add a convience method to add virtual machines
+    public void addVM(VirtualMachine virtualMachine) {
+
+        if (virtualMachines == null) {
+
+            virtualMachines = new ArrayList<VirtualMachine>();
+
+        }
+        System.out.println("virtual machine added" + virtualMachine.getVirtualMachineId());
+        virtualMachines.add(virtualMachine);
+
+
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY , cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
+            name = "training_session_trainer",
+            joinColumns = @JoinColumn(name = "training_session_id"),
+            inverseJoinColumns = @JoinColumn(name = "trainer_id")
+    )
+
+    @JsonIgnoreProperties("trainingSessions")
+    private List<Trainer> trainers;
+
+    public long[] getTrainerids() {
+        return trainerids;
+    }
+
+    public void setTrainerids(long[] trainerids) {
+        this.trainerids = trainerids;
+    }
+
+    public List<Trainer> getTrainers() {
+        return trainers;
+    }
+
+    public void setTrainers(List<Trainer> trainers) {
+        this.trainers = trainers;
+    }
+
+    public void add(Trainer tempTrainer) {
+
+        if(trainers ==null) {
+
+            trainers = new ArrayList<Trainer>();
+
+        }
+
+        trainers.add(tempTrainer);
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 }

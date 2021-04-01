@@ -3,8 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.TrainingSession;
 import com.example.demo.repository.TrainingSessionRepository;
-import com.example.demo.service.TrainingSessionService;
-import com.example.demo.service.TrainingSessionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,9 +22,6 @@ public class TrainingSessionController {
     @Autowired
     private TrainingSessionRepository trainingSessionRepository;
 
-    @Autowired
-    private TrainingSessionService trainingSessionService;
-
     //get all training session api
     @GetMapping("/trainingSessions")
 
@@ -37,8 +32,8 @@ public class TrainingSessionController {
     //add training session
     @PostMapping("/trainingSessions")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
-    public void createTrainingSession(@RequestBody TrainingSession trainingSession) {
-         trainingSessionService.saveTrainingSession(trainingSession);
+    public TrainingSession createTrainingSession(@RequestBody TrainingSession trainingSession) {
+        return trainingSessionRepository.save(trainingSession);
     }
 
     //get training session by id

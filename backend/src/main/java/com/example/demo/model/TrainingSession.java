@@ -11,7 +11,6 @@ import java.util.List;
 @Table(name="training_session")
 public class TrainingSession {
 
-
     @javax.persistence.Transient
     public long [] trainerids;
 
@@ -31,28 +30,28 @@ public class TrainingSession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "session_name")
+    @Column(name="session_name")
     private String sessionName;
 
-    @Column(name = "start_date")
+    @Column(name="start_date")
     private Date startDate;
 
-    @Column(name = "duration")
+    @Column(name="duration")
     private int duration;
 
-    @Column(name = "max_participants")
+    @Column(name="max_participants")
     private int maxParticipants;
 
-    @Column(name = "ifs_application_version")
+    @Column(name="ifs_application_version")
     private String ifsApplicationVersion;
 
-    @Column(name = "buffer_time")
+    @Column(name="buffer_time")
     private int bufferTime;
 
-    @Column(name = "manager_comments")
+    @Column(name="manager_comments")
     private String managerComment;
 
-    @Column(name = "delivery_method")
+    @Column(name="delivery_method")
     private String deliveryMethod;
 
 
@@ -221,15 +220,5 @@ public class TrainingSession {
 
 
     }
-
-
-
-
-
-
-
-
-
-
 
 }

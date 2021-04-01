@@ -1,8 +1,6 @@
 package com.example.demo.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name="virtual_machine")
@@ -74,50 +72,4 @@ public class VirtualMachine {
     public void setStatus(String status) {
         this.status = status;
     }
-
-
-
-    @ManyToMany(fetch = FetchType.LAZY , cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinTable(
-            name = "training_session_virtual_machine",
-            joinColumns = @JoinColumn(name = "vm_id"),
-            inverseJoinColumns = @JoinColumn(name = "s_id")
-    )
-
-    //@JsonIgnoreProperties("virtualMachines")
-    private List<TrainingSession> trainingSessions;
-
-
-
-
-    public List<TrainingSession> getTrainingSessions() {
-        return trainingSessions;
-    }
-
-    public void setTrainingSessions(List<TrainingSession> trainingSessions) {
-        this.trainingSessions = trainingSessions;
-    }
-
-
-    //adding a convenience method
-
-
-    public void add(TrainingSession tempSession) {
-
-        if(trainingSessions ==null) {
-
-            trainingSessions = new ArrayList<TrainingSession>();
-
-        }
-
-        trainingSessions.add(tempSession);
-
-
-    }
-
-
-
-
-
-
 }

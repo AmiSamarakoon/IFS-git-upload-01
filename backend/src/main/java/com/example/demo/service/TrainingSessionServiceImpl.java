@@ -38,7 +38,7 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
 	@Override
 	@Transactional
 	public void saveTrainingSession(TrainingSession trainingSession) {
-		System.out.println("inside TrainingSession Service impl addVm loop");
+		System.out.println("saving a training Session for the date " + trainingSession.getStartDate());
 
 
 

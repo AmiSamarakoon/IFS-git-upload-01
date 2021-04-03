@@ -4,6 +4,7 @@ package com.example.demo.model;
 import javax.persistence.*;
 import java.util.Date;
 
+
 @Entity
 @Table(name = "leave_application")
 public class LeaveApplication {

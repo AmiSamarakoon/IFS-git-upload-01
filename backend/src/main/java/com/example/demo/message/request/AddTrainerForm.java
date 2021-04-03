@@ -26,8 +26,6 @@ public class AddTrainerForm {
     @NotBlank
     private String contactNo;
 
-
-
     private Set<String> role;
 
     @NotBlank

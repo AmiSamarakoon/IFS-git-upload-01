@@ -3,6 +3,7 @@ package com.example.demo.message.request;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+
 public class LoginForm {
 
     @NotBlank

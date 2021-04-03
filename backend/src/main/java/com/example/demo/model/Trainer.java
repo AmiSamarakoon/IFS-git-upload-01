@@ -19,7 +19,6 @@ import java.util.List;
 public class Trainer {
 
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long trainerId;

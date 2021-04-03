@@ -76,7 +76,6 @@ public class VirtualMachineController {
 
 
 
-
     //add virtual machines
     @PreAuthorize("hasRole('MANAGER')")
     @PostMapping("/virtualMachines")

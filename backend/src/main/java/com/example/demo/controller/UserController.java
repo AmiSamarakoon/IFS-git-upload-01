@@ -27,7 +27,7 @@ public class UserController {
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getTrainerById(@PathVariable Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Trainer Not Found"));
+                 .orElseThrow(() -> new ResourceNotFoundException("Trainer Not Found"));
         return ResponseEntity.ok(user);
     }
 }

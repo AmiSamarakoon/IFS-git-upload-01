@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import org.slf4j.Logger;
 
-
 public class JwtAuthTokenFilter extends OncePerRequestFilter {
 
     @Autowired

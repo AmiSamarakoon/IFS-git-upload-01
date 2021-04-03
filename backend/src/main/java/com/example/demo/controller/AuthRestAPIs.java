@@ -89,7 +89,7 @@ public class AuthRestAPIs {
                 encoder.encode(addTrainerForm.getPassword()));
 
         Trainer trainer = new Trainer(addTrainerForm.getName(),tempUsername,addTrainerForm.getType(), addTrainerForm.getEmail(), addTrainerForm.getContactNo());
-        trainerRepository.save(trainer);
+         trainerRepository.save(trainer);
 
         Set<String> strRoles = addTrainerForm.getRole();
         Set<Role> roles = new HashSet<>();

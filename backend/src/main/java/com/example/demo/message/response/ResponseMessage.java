@@ -1,5 +1,6 @@
 package com.example.demo.message.response;
 
+
 public class ResponseMessage {
 
     private String message;

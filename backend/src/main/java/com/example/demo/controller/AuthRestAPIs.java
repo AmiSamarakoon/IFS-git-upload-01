@@ -1,13 +1,15 @@
 package com.example.demo.controller;
 
 import com.example.demo.message.request.LoginForm;
-import com.example.demo.message.request.SignUpForm;
+import com.example.demo.message.request.AddTrainerForm;
 import com.example.demo.message.response.JwtResponse;
 import com.example.demo.message.response.ResponseMessage;
 import com.example.demo.model.Role;
 import com.example.demo.model.RoleName;
+import com.example.demo.model.Trainer;
 import com.example.demo.model.User;
 import com.example.demo.repository.RoleRepository;
+import com.example.demo.repository.TrainerRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.jwt.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,9 @@ public class AuthRestAPIs {
     UserRepository userRepository;
 
     @Autowired
+    TrainerRepository trainerRepository;
+
+    @Autowired
     RoleRepository roleRepository;
 
     @Autowired
@@ -63,25 +68,30 @@ public class AuthRestAPIs {
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/add-trainer")
     @PreAuthorize("hasRole('MANAGER')")
     @Transactional
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody AddTrainerForm addTrainerForm) {
+        if (trainerRepository.existsByUsername(addTrainerForm.getUsername())) {
             return new ResponseEntity<>(new ResponseMessage("Fail -> Username is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
 
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (trainerRepository.existsByEmail(addTrainerForm.getEmail())) {
             return new ResponseEntity<>(new ResponseMessage("Fail -> Email is already in use!"),
                     HttpStatus.BAD_REQUEST);
         }
 
-        // Creating user's account
-        User user = new User(signUpRequest.getName(), signUpRequest.getUsername(), signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
+        String tempUsername = addTrainerForm.getUsername();
 
-        Set<String> strRoles = signUpRequest.getRole();
+        // Creating user's account
+        User user = new User( tempUsername,
+                encoder.encode(addTrainerForm.getPassword()));
+
+        Trainer trainer = new Trainer(addTrainerForm.getName(),tempUsername,addTrainerForm.getType(), addTrainerForm.getEmail(), addTrainerForm.getContactNo());
+        trainerRepository.save(trainer);
+
+        Set<String> strRoles = addTrainerForm.getRole();
         Set<Role> roles = new HashSet<>();
 
 
@@ -111,6 +121,7 @@ public class AuthRestAPIs {
 
         user.setRoles(roles);
         userRepository.save(user);
+
 
 
 

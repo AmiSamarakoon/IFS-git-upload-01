@@ -11,12 +11,9 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {
+@Table(name = "user", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
                 "username"
-        }),
-        @UniqueConstraint(columnNames = {
-                "email"
         })
 })
 public class User {
@@ -25,20 +22,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Size(min=3, max = 50)
-    @Column(name="name")
-    private String name;
+
 
     @NotBlank
     @Size(min=3, max = 50)
     private String username;
 
-    @NaturalId
-    @NotBlank
-    @Size(max = 50)
-    @Email
-    private String email;
+
 
     @NotBlank
     @Size(min=6, max = 100)
@@ -56,10 +46,8 @@ public class User {
     public User() {
     }
 
-    public User(String name, String username, String email, String password) {
-        this.name = name;
+    public User( String username,  String password) {
         this.username = username;
-        this.email = email;
         this.password = password;
 
     }
@@ -72,13 +60,7 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getUsername() {
         return username;
@@ -88,13 +70,7 @@ public class User {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getPassword() {
         return password;

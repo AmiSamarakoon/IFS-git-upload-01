@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.model.User;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.model.Trainer;
+import com.example.demo.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,22 +12,23 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/api")
-public class UserController {
+public class TrainerController {
+
 
     @Autowired
-    private UserRepository userRepository;
+    private TrainerRepository trainerRepository;
 
     //get all trainers
-    @GetMapping("/users")
-    public List<User> getAllTrainers() {
-        return userRepository.findAll();
+    @GetMapping("/trainers")
+    public List<Trainer> getAllTrainers() {
+        return trainerRepository.findAll();
     }
 
     //get trainer by id
-    @GetMapping("/users/{id}")
-    public ResponseEntity<User> getTrainerById(@PathVariable Long id) {
-        User user = userRepository.findById(id)
+    @GetMapping("/trainers/{id}")
+    public ResponseEntity<Trainer> getTrainerById(@PathVariable Long id) {
+        Trainer trainer = trainerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Trainer Not Found"));
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(trainer);
     }
 }

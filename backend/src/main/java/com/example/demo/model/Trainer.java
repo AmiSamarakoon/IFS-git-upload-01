@@ -1,13 +1,21 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "trainer")
+@Table(name = "trainer", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "email"
+        })
+})
 public class Trainer {
 
 
@@ -16,12 +24,41 @@ public class Trainer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long trainerId;
 
-    @Column(name = "name")
-    private  String name;
+    @NotBlank
+    @Size(min=3, max = 50)
+    @Column(name="name")
+    private String name;
 
+    @NotBlank
+    @Size(min=3, max = 50)
+    @Column(name="user_name")
+    private String username;
+
+    @NotBlank
     @Column(name = "Type")
     private  String type;
 
+    @NaturalId
+    @NotBlank
+    @Size(max = 50)
+    @Email
+    @Column(name="email")
+    private String email;
+
+    @NotBlank
+    @Column(name="contactNo")
+    private String contactNo;
+
+    public Trainer() {
+    }
+
+    public Trainer( @NotBlank @Size(min = 3, max = 50) String name, @NotBlank @Size(min = 3, max = 50) String userName, String type, @NotBlank @Size(max = 50) @Email String email, @NotBlank String contactNo) {
+        this.name = name;
+        this.username = userName;
+        this.type = type;
+        this.email = email;
+        this.contactNo = contactNo;
+    }
 
     public String getName() {
         return name;
@@ -39,7 +76,28 @@ public class Trainer {
         this.type = type;
     }
 
-    public Trainer() {
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String userName) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
     }
 
     @ManyToMany(fetch = FetchType.LAZY , cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
@@ -53,10 +111,7 @@ public class Trainer {
     private List<TrainingSession> trainingSessions;
 
 
-    public Trainer(String name, String type) {
-        this.name = name;
-        this.type = type;
-    }
+
 
     public List<TrainingSession> getTrainingSessions() {
         return trainingSessions;

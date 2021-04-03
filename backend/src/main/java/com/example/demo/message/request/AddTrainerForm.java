@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
-public class SignUpForm {
+public class AddTrainerForm {
 
     @NotBlank
     @Size(min = 3, max = 50)
@@ -16,9 +16,17 @@ public class SignUpForm {
     private String username;
 
     @NotBlank
+    private String type;
+
+    @NotBlank
     @Size(max = 60)
     @Email
     private String email;
+
+    @NotBlank
+    private String contactNo;
+
+
 
     private Set<String> role;
 
@@ -71,7 +79,19 @@ public class SignUpForm {
         this.password = password;
     }
 
+    public String getType() {
+        return type;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
 
+    public String getContactNo() {
+        return contactNo;
+    }
 
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
+    }
 }

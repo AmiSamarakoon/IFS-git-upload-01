@@ -6,12 +6,19 @@ import java.util.List;
 
 
 @Entity
-@Table(name="virtual_machine")
+@Table(name = "virtual_machine", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "name"
+        })
+})
 public class VirtualMachine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long virtualMachineId;
+
+    @Column(name="name")
+    private String name;
 
     @Column(name="product")
     private String product;
@@ -24,6 +31,10 @@ public class VirtualMachine {
 
     @Column(name="status")
     private String status;
+
+    @ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+    @JoinColumn(name = "type_id")
+    private Type type;
 
     public VirtualMachine() {
     }
@@ -78,13 +89,14 @@ public class VirtualMachine {
 
 
 
+
+
     @ManyToMany(fetch = FetchType.LAZY , cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(
             name = "training_session_virtual_machine",
             joinColumns = @JoinColumn(name = "vm_id"),
             inverseJoinColumns = @JoinColumn(name = "s_id")
     )
-
     //@JsonIgnoreProperties("virtualMachines")
     private List<TrainingSession> trainingSessions;
 

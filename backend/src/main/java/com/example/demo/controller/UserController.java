@@ -19,13 +19,13 @@ public class UserController {
 
     //get all trainers
     @GetMapping("/users")
-    public List<User> getAllTrainers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     //get trainer by id
     @GetMapping("/users/{id}")
-    public ResponseEntity<User> getTrainerById(@PathVariable Long id) {
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
         User user = userRepository.findById(id)
                  .orElseThrow(() -> new ResourceNotFoundException("Trainer Not Found"));
         return ResponseEntity.ok(user);

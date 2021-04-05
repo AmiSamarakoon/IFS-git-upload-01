@@ -151,9 +151,7 @@ public class TrainingSession {
         this.deliveryMethod = deliveryMethod;
     }
 
-    @ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
-    @JoinColumn(name = "type_id")
-    private Type type;
+
 
     @ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
     @JoinColumn(name = "coordinator_id")

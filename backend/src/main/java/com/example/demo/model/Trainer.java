@@ -14,6 +14,9 @@ import java.util.List;
 @Table(name = "trainer", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
                 "email"
+        }),
+        @UniqueConstraint(columnNames = {
+                "user_name"
         })
 })
 public class Trainer {
@@ -33,6 +36,10 @@ public class Trainer {
     @Column(name="user_name")
     private String username;
 
+    @NotBlank
+    @Column(name = "type")
+    private String type;
+
 
     @NaturalId
     @NotBlank
@@ -45,21 +52,17 @@ public class Trainer {
     @Column(name="contactNo")
     private String contactNo;
 
-    @ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
-    @JoinColumn(name = "type_id")
-    private Type type;
+
 
     public Trainer() {
     }
 
-    public Trainer(@NotBlank @Size(min = 3, max = 50) String name, @NotBlank @Size(min = 3, max = 50) String username, @NotBlank @Size(max = 50) @Email String email, @NotBlank String contactNo) {
+    public Trainer(@NotBlank @Size(min = 3, max = 50) String name, @NotBlank @Size(min = 3, max = 50) String username, @NotBlank String type, @NotBlank @Size(max = 50) @Email String email, @NotBlank String contactNo) {
         this.name = name;
         this.username = username;
+        this.type = type;
         this.email = email;
         this.contactNo = contactNo;
-        this.type = type;
-        this.trainingSessions = trainingSessions;
-        this.leaveApplications = leaveApplications;
     }
 
     public String getName() {
@@ -71,13 +74,7 @@ public class Trainer {
     }
 
 
-    public Type getType() {
-        return type;
-    }
 
-    public void setType(Type type) {
-        this.type = type;
-    }
 
     public String getUsername() {
         return username;
@@ -85,6 +82,14 @@ public class Trainer {
 
     public void setUsername(String userName) {
         this.username = username;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getEmail() {

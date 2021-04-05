@@ -24,6 +24,7 @@ public class AddTrainerForm {
     private String email;
 
     @NotBlank
+    @Size(min = 9, max = 12)
     private String contactNo;
 
     private Set<String> role;

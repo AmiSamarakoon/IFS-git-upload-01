@@ -32,9 +32,7 @@ public class VirtualMachine {
     @Column(name="status")
     private String status;
 
-    @ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
-    @JoinColumn(name = "type_id")
-    private Type type;
+
 
     public VirtualMachine() {
     }

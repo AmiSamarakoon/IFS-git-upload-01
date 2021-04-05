@@ -7,7 +7,6 @@ import com.example.demo.message.response.ResponseMessage;
 import com.example.demo.model.*;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.TrainerRepository;
-import com.example.demo.repository.TypeRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.jwt.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +44,7 @@ public class AuthRestAPIs {
     @Autowired
     RoleRepository roleRepository;
 
-    @Autowired
-    TypeRepository typeRepository;
+
 
     @Autowired
     PasswordEncoder encoder;
@@ -84,36 +82,24 @@ public class AuthRestAPIs {
                     HttpStatus.BAD_REQUEST);
         }
 
-        String tempUsername = addTrainerForm.getUsername();
 
         // Creating user's account
-        User user = new User( tempUsername,
+        User user = new User( addTrainerForm.getUsername(),
                 encoder.encode(addTrainerForm.getPassword()));
 
-        Trainer trainer = new Trainer(addTrainerForm.getName(),tempUsername, addTrainerForm.getEmail(), addTrainerForm.getContactNo());
+        Trainer trainer = new Trainer(addTrainerForm.getName(),addTrainerForm.getUsername(), addTrainerForm.getType(), addTrainerForm.getEmail(), addTrainerForm.getContactNo());
 
 
-         String type = addTrainerForm.getType();
-         System.out.println(type);
+
+
 
         Set<String> strRoles = addTrainerForm.getRole();
         Set<Role> roles = new HashSet<>();
 
 
-           if(type.equals("Developer training")){
-               Type tempDev = typeRepository.findByName("Developer training");
-               tempDev.add(trainer);
-           }else if(type.equals("Technician")){
-               Type tempTech = typeRepository.findByName("Technician");
-               tempTech.add(trainer);
-           }else if(type.equals("Functional")){
-               Type tempFunc = typeRepository.findByName("Functional");
-               System.out.println(tempFunc.toString());
-               tempFunc.add(trainer);
-           }else{
-               Type tempOther = typeRepository.findByName("Other");
-               tempOther.add(trainer);
-           }
+
+
+
 
 
 

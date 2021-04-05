@@ -98,6 +98,7 @@ public class VirtualMachineController {
         VirtualMachine virtualMachine = virtualMachineRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Virtual Machine Not Found"));
 
+
         virtualMachineRepository.delete(virtualMachine);
         Map<String,Boolean> response = new HashMap<>();
         response.put("deleted",Boolean.TRUE);

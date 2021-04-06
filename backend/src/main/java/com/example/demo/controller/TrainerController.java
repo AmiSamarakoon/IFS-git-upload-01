@@ -40,11 +40,19 @@ public class TrainerController {
 
         List<Trainer> availableTrainers =  new ArrayList<Trainer>();
 
-        SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-dd-MM");
+        SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
 
         Date date=formatter2.parse(datestring);
 
         System.out.println("date is " + date);
+
+
+
+
+
+
+
+
 
         for(int i=0 ; i<trainers.size() ; i++){
 
@@ -54,16 +62,30 @@ public class TrainerController {
             for( int j =0 ; j< trainers.get(i).getTrainingSessions().size() ; j++){
 
                 Date date1 = formatter2.parse(trainers.get(i).getTrainingSessions().get(j).getStartDate().toString());
-                System.out.println(date1 + "adding one day" + date1);
+                System.out.println(" Relevant training Session date is  " + date1);
+
+                    for(int k=0 ; k<trainers.get(i).getTrainingSessions().get(j).getDuration() ; k++){
+
+                        //increment date
 
 
+                        String dt = date1.toString();  // Start date
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(date1);
+                        c.add(Calendar.DATE, k);  // number of days to add
+
+                        System.out.println("Duration Function date is " + c.getTime().toString() + " After adding " + k);
 
 
-                if(date1.toString().equals(date.toString())){
+                        if(c.getTime().toString().equals(date.toString())){
 
-                    System.out.println("busy");
-                    availability = 0;
-                }
+                            System.out.println("---------------busy because of -------------" + c.getTime().toString() + " si equal to " +date.toString() );
+                            availability = 0;
+                        }
+
+                    }
+
+
 
             }
 

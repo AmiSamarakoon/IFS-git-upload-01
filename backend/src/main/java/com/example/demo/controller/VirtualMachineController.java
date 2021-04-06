@@ -38,7 +38,7 @@ public class VirtualMachineController {
 
         List<VirtualMachine> availableVms =  new ArrayList<VirtualMachine>();
 
-        SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-dd-MM");
+        SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
         Date date=formatter2.parse(datestring);
 
 
@@ -54,12 +54,33 @@ public class VirtualMachineController {
                 Date date1 = formatter2.parse(virtualMachines.get(i).getTrainingSessions().get(j).getStartDate().toString());
                 System.out.println(date1);
 
+//////////////////////////////////////////////////////
 
-                if(date1.toString().equals(date.toString())){
+                System.out.println(" Relevant training Session date is  " + date1);
 
-                    System.out.println("busy");
-                    availability = 0;
+                for(int k=0 ; k<virtualMachines.get(i).getTrainingSessions().get(j).getDuration() ; k++){
+
+                    //increment date
+
+
+                    String dt = date1.toString();  // Start date
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(date1);
+                    c.add(Calendar.DATE, k);  // number of days to add
+
+                    System.out.println("Duration Function date is " + c.getTime().toString() + " After adding " + k);
+
+
+                    if(c.getTime().toString().equals(date.toString())){
+
+                        System.out.println("---------------busy because of -------------" + c.getTime().toString() + " si equal to " +date.toString() );
+                        availability = 0;
+                    }
+
                 }
+
+
+///////////////////////////////////////
 
             }
 

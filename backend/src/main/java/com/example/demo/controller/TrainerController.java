@@ -2,12 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Trainer;
+import com.example.demo.model.TrainingSession;
 import com.example.demo.model.User;
 import com.example.demo.model.VirtualMachine;
 import com.example.demo.repository.TrainerRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -30,6 +32,17 @@ public class TrainerController {
     public List<Trainer> getAllTrainers() {
         return trainerRepository.findAll();
     }
+
+
+    //add trainer session
+    @PostMapping("/trainers")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
+    public void addTrainer(@RequestBody Trainer trainer) {
+        trainerRepository.save(trainer);
+    }
+
+
+
 
     @GetMapping("/trainers/{type}/{datestring}")
     public List<Trainer> getTrainerByType(@PathVariable String type , @PathVariable String datestring) throws ParseException {

@@ -22,6 +22,20 @@ public class Trainer {
     @Column(name = "Type")
     private  String type;
 
+    @ElementCollection
+    @CollectionTable(
+            name = "Qualification",
+            joinColumns = @JoinColumn(name = "trainerId")
+    )
+    private List<String> qualifications;
+
+    public List<String> getQualifications() {
+        return qualifications;
+    }
+
+    public void setQualifications(List<String> qualifications) {
+        this.qualifications = qualifications;
+    }
 
     public String getName() {
         return name;
@@ -89,6 +103,21 @@ public class Trainer {
 
 
     }
+
+
+    public void addQualification(String qualification) {
+
+        if(qualifications ==null) {
+
+            qualifications = new ArrayList<String>();
+
+        }
+
+        qualifications.add(qualification);
+
+    }
+
+
 
 
 

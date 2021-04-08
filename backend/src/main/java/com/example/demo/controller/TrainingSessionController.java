@@ -6,6 +6,7 @@ import com.example.demo.model.TrainingSession;
 import com.example.demo.repository.TrainerRepository;
 import com.example.demo.repository.TrainingSessionRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.VirtualMachineRepository;
 import com.example.demo.service.TrainingSessionService;
 import com.example.demo.service.TrainingSessionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,9 @@ public class TrainingSessionController {
 
     @Autowired
     private TrainingSessionService trainingSessionService;
+
+    @Autowired
+    private VirtualMachineRepository virtualMachineRepository;
 
 
 
@@ -72,6 +76,9 @@ public class TrainingSessionController {
          trainingSessionService.saveTrainingSession(trainingSession);
     }
 
+
+
+
     //get training session by id
     @GetMapping("/trainingSessions/{id}")
 
@@ -86,21 +93,35 @@ public class TrainingSessionController {
     @PutMapping("/trainingSessions/{id}")
 
     public ResponseEntity<TrainingSession> updateTrainingSession(@PathVariable Long id, @RequestBody TrainingSession trainingSessionDetails) {
-        TrainingSession trainingSession = trainingSessionRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Training Session Not Found")
-                );
-        trainingSession.setSessionName(trainingSessionDetails.getSessionName());
-        trainingSession.setStartDate(trainingSessionDetails.getStartDate());
-        trainingSession.setDuration(trainingSessionDetails.getDuration());
-        trainingSession.setMaxParticipants(trainingSessionDetails.getMaxParticipants());
-        trainingSession.setBufferTime(trainingSessionDetails.getBufferTime());
-        trainingSession.setIfsApplicationVersion(trainingSessionDetails.getIfsApplicationVersion());
-        trainingSession.setManagerComment(trainingSessionDetails.getManagerComment());
-        trainingSession.setDeliveryMethod(trainingSessionDetails.getDeliveryMethod());
 
 
-        TrainingSession updateTrainingSession = trainingSessionRepository.save(trainingSession);
-        return ResponseEntity.ok(updateTrainingSession);
+        for(int i=0 ; i<trainingSessionDetails.getVmIds().length ; i++) {
+
+
+            long num = Long.parseLong(trainingSessionDetails.getVmIds()[i]);
+
+            System.out.println("inside TrainingSession Service impl addVm loop");
+            trainingSessionDetails.addVM(virtualMachineRepository.findVirtualMachineByVirtualMachineId(num));
+
+        }
+
+
+
+
+        for(int i=0 ; i<trainingSessionDetails.getTrainerids().length ; i++) {
+
+            System.out.println("inside TrainingSession Service impl addTrainer  loop");
+
+
+            trainingSessionDetails.add(trainerRepository.findByTrainerId(trainingSessionDetails.getTrainerids()[i]));
+
+        }
+
+
+
+        trainingSessionRepository.save(trainingSessionDetails);
+
+        return ResponseEntity.ok(trainingSessionDetails);
 
     }
 

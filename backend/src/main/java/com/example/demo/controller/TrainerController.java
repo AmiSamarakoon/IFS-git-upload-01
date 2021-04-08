@@ -34,6 +34,17 @@ public class TrainerController {
     }
 
 
+    //getTrainerbyId
+    @GetMapping("/trainers/{id}")
+    public Trainer getTrainerById (@PathVariable Long id) {
+
+        return trainerRepository.findByTrainerId(id);
+
+    }
+
+
+
+
     //add trainer session
     @PostMapping("/trainers")
     @PreAuthorize("hasRole('ROLE_MANAGER')")

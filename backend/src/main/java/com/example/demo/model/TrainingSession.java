@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -35,6 +36,7 @@ public class TrainingSession {
     private String sessionName;
 
     @Column(name = "start_date")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
 
     @Column(name = "duration")
@@ -55,6 +57,16 @@ public class TrainingSession {
     @Column(name = "delivery_method")
     private String deliveryMethod;
 
+    @Column(name = "type")
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public TrainingSession() {
     }
@@ -66,7 +78,8 @@ public class TrainingSession {
                            String ifsApplicationVersion,
                            int bufferTime,
                            String managerComment,
-                           String deliveryMethod) {
+                           String deliveryMethod,
+                           String type) {
         super();
         this.sessionName = sessionName;
         this.startDate = startDate;
@@ -76,6 +89,7 @@ public class TrainingSession {
         this.bufferTime = bufferTime;
         this.managerComment = managerComment;
         this.deliveryMethod = deliveryMethod;
+        this.type = type;
     }
 
     public long getId() {

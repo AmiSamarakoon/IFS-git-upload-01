@@ -5,6 +5,7 @@ import com.example.demo.model.Trainer;
 import com.example.demo.model.TrainingSession;
 import com.example.demo.repository.TrainerRepository;
 import com.example.demo.repository.TrainingSessionRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.TrainingSessionService;
 import com.example.demo.service.TrainingSessionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,10 @@ public class TrainingSessionController {
     private TrainerRepository trainerRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+
+    @Autowired
     private TrainingSessionService trainingSessionService;
 
 
@@ -37,17 +42,20 @@ public class TrainingSessionController {
     //get all training session api
     @GetMapping("/trainingSessions")
     public List<TrainingSession> getAllTrainingSession() {
+        System.out.println("Getting training Sessions ------*******------12-----*---*-*-*------------------------------****************------------***");
+
         return trainingSessionRepository.findAll();
     }
 
 
-    @GetMapping("/trainingSessionByTrainer/{id}")
-    public List<TrainingSession> getAllTrainingSessionbyTrainer(@PathVariable Long id) {
+    @GetMapping("/trainingSessionByTrainer/{username}")
+    public List<TrainingSession> getAllTrainingSessionbyTrainer(@PathVariable String username) {
 
 
 
+      String trainerName = userRepository.findUserByUsername(username).getName();
 
-     Trainer trainer = trainerRepository.findByTrainerId(id);
+     Trainer trainer = trainerRepository.findByName(trainerName);
       List<TrainingSession> trainingSessions  = trainer.getTrainingSessions();
 
 

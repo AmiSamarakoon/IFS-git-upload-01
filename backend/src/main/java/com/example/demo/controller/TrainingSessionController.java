@@ -94,32 +94,8 @@ public class TrainingSessionController {
 
     public ResponseEntity<TrainingSession> updateTrainingSession(@PathVariable Long id, @RequestBody TrainingSession trainingSessionDetails) {
 
+        trainingSessionService.updateTrainingSession(trainingSessionDetails , id);
 
-        for(int i=0 ; i<trainingSessionDetails.getVmIds().length ; i++) {
-
-
-            long num = Long.parseLong(trainingSessionDetails.getVmIds()[i]);
-
-            System.out.println("inside TrainingSession Service impl addVm loop");
-            trainingSessionDetails.addVM(virtualMachineRepository.findVirtualMachineByVirtualMachineId(num));
-
-        }
-
-
-
-
-        for(int i=0 ; i<trainingSessionDetails.getTrainerids().length ; i++) {
-
-            System.out.println("inside TrainingSession Service impl addTrainer  loop");
-
-
-            trainingSessionDetails.add(trainerRepository.findByTrainerId(trainingSessionDetails.getTrainerids()[i]));
-
-        }
-
-
-
-        trainingSessionRepository.save(trainingSessionDetails);
 
         return ResponseEntity.ok(trainingSessionDetails);
 

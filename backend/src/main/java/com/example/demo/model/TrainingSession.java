@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name="training_session")
@@ -164,21 +162,21 @@ public class TrainingSession {
         this.deliveryMethod = deliveryMethod;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
     @JoinTable(
             name = "training_session_virtual_machine",
             joinColumns = @JoinColumn(name = "s_id"),
             inverseJoinColumns = @JoinColumn(name = "vm_id")
     )
     @JsonIgnoreProperties("trainingSessions")
-    private List<VirtualMachine> virtualMachines;
+    private Set<VirtualMachine> virtualMachines;
 
 
-    public List<VirtualMachine> getVirtualMachines() {
+    public Set<VirtualMachine> getVirtualMachines() {
         return virtualMachines;
     }
 
-    public void setVirtualMachines(List<VirtualMachine> virtualMachines) {
+    public void setVirtualMachines(Set<VirtualMachine> virtualMachines) {
         this.virtualMachines = virtualMachines;
     }
 
@@ -188,7 +186,7 @@ public class TrainingSession {
 
         if (virtualMachines == null) {
 
-            virtualMachines = new ArrayList<VirtualMachine>();
+            virtualMachines = new HashSet<VirtualMachine>();
 
         }
         System.out.println("virtual machine added" + virtualMachine.getVirtualMachineId());
@@ -205,7 +203,7 @@ public class TrainingSession {
     )
 
     @JsonIgnoreProperties("trainingSessions")
-    private List<Trainer> trainers;
+    private Set<Trainer> trainers;
 
     public long[] getTrainerids() {
         return trainerids;
@@ -215,11 +213,11 @@ public class TrainingSession {
         this.trainerids = trainerids;
     }
 
-    public List<Trainer> getTrainers() {
+    public Set<Trainer> getTrainers() {
         return trainers;
     }
 
-    public void setTrainers(List<Trainer> trainers) {
+    public void setTrainers(Set<Trainer> trainers) {
         this.trainers = trainers;
     }
 
@@ -227,7 +225,7 @@ public class TrainingSession {
 
         if(trainers ==null) {
 
-            trainers = new ArrayList<Trainer>();
+            trainers = new HashSet<Trainer>();
 
         }
 

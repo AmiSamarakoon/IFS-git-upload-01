@@ -87,35 +87,42 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
 
 	@Override
 	@Transactional
-	public void updateTrainingSession(TrainingSession trainingSession, String sessionId) {
+	public void updateTrainingSession(TrainingSession trainingSession, Long id) {
 
-//
-//	//add trainers to the training Session
-//
-//			trainingSession.setTrainers(null);
-//
-//		for(int i=0 ; i<trainingSession.gettrainerids().length ; i++) {
-//
-//			System.out.println(trainerDAO.getTrainer(trainingSession.gettrainerids()[i]).getName());
-//
-//			trainingSession.add(trainerDAO.getTrainer(trainingSession.gettrainerids()[i]));
-//
-//		}
-//
-//
-//		//add VMs to the Training Sessionn
-//		trainingSession.setVirtualMachines(null);
-//
-//
-//	for(int i=0 ; i<trainingSession.getVmIds().length ; i++) {
-//
-//
-//			trainingSession.addVM(virtualMachineDAO.getVirtualMachine(trainingSession.getVmIds()[i]));
-//
-//		}
-//
-//
-//		trainingSessionDAO.updateTrainingSession(trainingSession,sessionId);
+
+		TrainingSession trsession  = trainingSessionRepository.getOne(id);
+
+
+
+
+		for(int i=0 ; i<trainingSession.getVmIds().length ; i++) {
+
+
+			long num = Long.parseLong(trainingSession.getVmIds()[i]);
+
+			System.out.println("inside TrainingSession Service impl addVm loop");
+			trsession.addVM(virtualMachineRepository.findVirtualMachineByVirtualMachineId(num));
+
+		}
+
+
+
+
+		for(int i=0 ; i<trainingSession.getTrainerids().length ; i++) {
+
+			System.out.println("inside TrainingSession Service impl addTrainer  loop");
+
+
+			trsession.add(trainerRepository.findByTrainerId(trainingSession.getTrainerids()[i]));
+
+		}
+
+
+
+		trainingSessionRepository.save(trsession);
+
+
+
 	}
 
 }

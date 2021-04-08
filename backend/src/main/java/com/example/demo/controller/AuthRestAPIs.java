@@ -87,46 +87,11 @@ public class AuthRestAPIs {
         User user = new User( addTrainerForm.getUsername(),
                 encoder.encode(addTrainerForm.getPassword()));
 
-        Trainer trainer = new Trainer(addTrainerForm.getName(),addTrainerForm.getUsername(), addTrainerForm.getType(), addTrainerForm.getEmail(), addTrainerForm.getContactNo());
-
-
-
+        Trainer trainer = new Trainer(addTrainerForm.getName(),addTrainerForm.getUsername(), addTrainerForm.getType(), addTrainerForm.getQualifications(), addTrainerForm.getEmail(), addTrainerForm.getContactNo());
 
 
         Set<String> strRoles = addTrainerForm.getRole();
         Set<Role> roles = new HashSet<>();
-
-
-
-
-
-
-
-
-        /*   switch (type) {
-                case "Developer training":
-                    Type tempDev = typeRepository.findByName("Developer training");
-                    tempDev.add(trainer);
-
-                    break;
-                case "Technician":
-                    Type tempTech = typeRepository.findByName("Technician");
-                    tempTech.add(trainer);
-
-                    break;
-                case "Functional":
-                    Type tempFunc = typeRepository.findByName("Functional");
-                    System.out.println(tempFunc.toString());
-                    tempFunc.add(trainer);
-
-                    break;
-                case "Other":
-                    Type tempOther = typeRepository.findByName("Other");
-                    tempOther.add(trainer);
-
-                    break;
-
-            };*/
 
 
 
@@ -159,11 +124,7 @@ public class AuthRestAPIs {
         trainerRepository.save(trainer);
 
 
-
-
-
         return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
     }
-
 
 }

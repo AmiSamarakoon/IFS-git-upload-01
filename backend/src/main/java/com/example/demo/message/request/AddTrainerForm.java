@@ -3,6 +3,7 @@ package com.example.demo.message.request;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Set;
 
 public class AddTrainerForm {
@@ -17,6 +18,9 @@ public class AddTrainerForm {
 
     @NotBlank
     private String type;
+
+    @NotBlank
+    private List<String> qualifications;
 
     @NotBlank
     @Size(max = 60)
@@ -52,6 +56,14 @@ public class AddTrainerForm {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public List<String> getQualifications() {
+        return qualifications;
+    }
+
+    public void setQualifications(List<String> qualifications) {
+        this.qualifications = qualifications;
     }
 
     public String getEmail() {

@@ -19,6 +19,10 @@ public interface TrainerRepository extends JpaRepository<Trainer, Long> {
 
     Trainer findByName(String trainerName);
     Boolean existsByEmail(String email);
+    List<Trainer> findByType(String lastname);
+
+    Trainer findByTrainerId (long trainerId);
+    Trainer findByUsername(String username);
 
 
     Boolean existsByUsername(String username);

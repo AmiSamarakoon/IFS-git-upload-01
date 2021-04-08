@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.model.Trainer;
 import com.example.demo.model.TrainingSession;
+import com.example.demo.repository.TrainerRepository;
 import com.example.demo.repository.TrainingSessionRepository;
 import com.example.demo.service.TrainingSessionService;
 import com.example.demo.service.TrainingSessionServiceImpl;
@@ -28,11 +30,27 @@ public class TrainingSessionController {
     @Autowired
     private TrainingSessionService trainingSessionService;
 
+    @Autowired
+    private TrainerRepository trainerRepository;
+
     //get all training session api
     @GetMapping("/trainingSessions")
 
     public List<TrainingSession> getAllTrainingSession() {
         return trainingSessionRepository.findAll();
+    }
+
+    @GetMapping("/trainingSessionByTrainer/{username}")
+    public List<TrainingSession> getAllTrainingSessionbyTrainer(@PathVariable String username) {
+
+
+
+
+        Trainer trainer = trainerRepository.findByUsername(username);
+        List<TrainingSession> trainingSessions  = trainer.getTrainingSessions();
+
+
+        return trainingSessions;
     }
 
     //add training session

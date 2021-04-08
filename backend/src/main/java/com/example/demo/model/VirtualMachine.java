@@ -8,7 +8,7 @@ import java.util.List;
 @Entity
 @Table(name = "virtual_machine", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
-                "name"
+                "vm_name"
         })
 })
 public class VirtualMachine {
@@ -17,8 +17,8 @@ public class VirtualMachine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long virtualMachineId;
 
-    @Column(name="name")
-    private String name;
+    @Column(name="vm_name")
+    private String virtualMachineName;
 
     @Column(name="product")
     private String product;
@@ -29,20 +29,20 @@ public class VirtualMachine {
     @Column(name="region")
     private String region;
 
-    @Column(name="status")
-    private String status;
+
 
 
 
     public VirtualMachine() {
     }
 
-    public VirtualMachine(String product, String version, String region, String status) {
+    public VirtualMachine(String virtualMachineName, String product, String version, String region) {
         super();
+        this.virtualMachineName = virtualMachineName;
         this.product = product;
         this.version = version;
         this.region = region;
-        this.status = status;
+
     }
 
     public long getVirtualMachineId() {
@@ -51,6 +51,14 @@ public class VirtualMachine {
 
     public void setVirtualMachineId(long virtualMachineId) {
         this.virtualMachineId = virtualMachineId;
+    }
+
+    public String getVirtualMachineName() {
+        return virtualMachineName;
+    }
+
+    public void setVirtualMachineName(String virtualMachineName) {
+        this.virtualMachineName = virtualMachineName;
     }
 
     public String getProduct() {
@@ -77,13 +85,7 @@ public class VirtualMachine {
         this.region = region;
     }
 
-    public String getStatus() {
-        return status;
-    }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
 
 

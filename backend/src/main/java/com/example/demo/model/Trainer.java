@@ -40,6 +40,20 @@ public class Trainer {
     @Column(name = "type")
     private String type;
 
+    @ElementCollection
+    @CollectionTable(
+            name = "Qualification",
+            joinColumns = @JoinColumn(name = "trainerId")
+    )
+    private List<String> qualifications;
+
+    public List<String> getQualifications() {
+        return qualifications;
+    }
+
+    public void setQualifications(List<String> qualifications) {
+        this.qualifications = qualifications;
+    }
 
     @NaturalId
     @NotBlank
@@ -57,10 +71,11 @@ public class Trainer {
     public Trainer() {
     }
 
-    public Trainer(@NotBlank @Size(min = 3, max = 50) String name, @NotBlank @Size(min = 3, max = 50) String username, @NotBlank String type, @NotBlank @Size(max = 50) @Email String email, @NotBlank String contactNo) {
+    public Trainer(@NotBlank @Size(min = 3, max = 50) String name, @NotBlank @Size(min = 3, max = 50) String username, @NotBlank String type, List<String> qualifications, @NotBlank @Size(max = 50) @Email String email, @NotBlank String contactNo) {
         this.name = name;
         this.username = username;
         this.type = type;
+        this.qualifications=qualifications;
         this.email = email;
         this.contactNo = contactNo;
     }

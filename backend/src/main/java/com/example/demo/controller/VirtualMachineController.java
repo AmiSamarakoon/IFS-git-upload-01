@@ -27,6 +27,12 @@ public class VirtualMachineController {
         return virtualMachineRepository.findAll();
     }
 
+    @GetMapping("/virtualMachines-trainingSession/{id}")
+    public List<VirtualMachine> getVirtualMachineByTrainingSessions(@PathVariable Long id){
+        System.out.println(virtualMachineRepository.findVirtualMachineByTrainingSessions(id).get(1).getVirtualMachineName());
+        return virtualMachineRepository.findVirtualMachineByTrainingSessions(id);
+    }
+
 
 
     @GetMapping("/availableVirtualMachines/{datestring}")

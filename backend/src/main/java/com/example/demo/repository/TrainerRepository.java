@@ -14,9 +14,6 @@ import java.util.Optional;
 @Repository
 public interface TrainerRepository extends JpaRepository<Trainer, Long> {
 
-
-
-
     Trainer findByName(String trainerName);
     Boolean existsByEmail(String email);
     List<Trainer> findByType(String lastname);

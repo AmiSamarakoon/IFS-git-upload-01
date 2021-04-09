@@ -71,8 +71,18 @@ public class TrainerController {
         System.out.println("date is " + date);
 
 
+        int Duration  = 2;
+
+        Date date2 =formatter2.parse(datestring);
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(date2);
+        c1.add(Calendar.DATE , Duration);
+
+        System.out.println("*********** THe date before adding the duration " + date2.toString());
 
 
+        System.out.println("*********** THe date after adding the duration " + c1.getTime().toString());
 
 
 

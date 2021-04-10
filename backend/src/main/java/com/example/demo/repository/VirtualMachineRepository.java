@@ -15,6 +15,9 @@ public interface VirtualMachineRepository extends JpaRepository<VirtualMachine,L
     @Query("select v from TrainingSession t join t.virtualMachines v where t.id=(:id) ")
     List<VirtualMachine> findVirtualMachineByTrainingSessions(@Param("id") Long id);
 
+    @Query("select v from VirtualMachine v where v.product=(:product)")
+    List<VirtualMachine> findAllByProduct(@Param("product") String product);
+
 
 
 

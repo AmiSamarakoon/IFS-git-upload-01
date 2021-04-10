@@ -35,12 +35,13 @@ public class VirtualMachineController {
 
 
 
-    @GetMapping("/availableVirtualMachines/{datestring}")
-    public List<VirtualMachine> getAvailableVirtualMachines(@PathVariable String datestring) throws ParseException {
+    @GetMapping("/availableVirtualMachines/{datestring}/{product}")
+    public List<VirtualMachine> getAvailableVirtualMachines(@PathVariable String datestring, @PathVariable String product) throws ParseException {
 
         System.out.println("running method");
 
-        List<VirtualMachine> virtualMachines = virtualMachineRepository.findAll();
+        List<VirtualMachine> virtualMachines = virtualMachineRepository.findAllByProduct(product);
+        System.out.println(virtualMachines);
 
         List<VirtualMachine> availableVms =  new ArrayList<VirtualMachine>();
 

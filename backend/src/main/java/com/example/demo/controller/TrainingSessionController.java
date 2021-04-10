@@ -92,6 +92,28 @@ public class TrainingSessionController {
 
     }
 
+    @PutMapping("/trainingSessionVm/{id}")
+    public ResponseEntity<TrainingSession> updateTrainingSessionVm(@PathVariable Long id, @RequestBody TrainingSession trainingSessionDetails) {
+        TrainingSession trainingSession = trainingSessionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Training Session Not Found")
+                );
+       /* trainingSession.setSessionName(trainingSessionDetails.getSessionName());
+        trainingSession.setStartDate(trainingSessionDetails.getStartDate());
+        trainingSession.setDuration(trainingSessionDetails.getDuration());
+        trainingSession.setMaxParticipants(trainingSessionDetails.getMaxParticipants());
+        trainingSession.setBufferTime(trainingSessionDetails.getBufferTime());
+        trainingSession.setIfsApplicationVersion(trainingSessionDetails.getIfsApplicationVersion());
+        trainingSession.setManagerComment(trainingSessionDetails.getManagerComment());
+        trainingSession.setDeliveryMethod(trainingSessionDetails.getDeliveryMethod());
+
+        trainingSession.setVirtualMachines(trainingSessionDetails.getVirtualMachines());*/
+
+
+        TrainingSession updateTrainingSession = trainingSessionRepository.save(trainingSession);
+        return ResponseEntity.ok(updateTrainingSession);
+
+    }
+
     //delete training session
     @DeleteMapping("/trainingSessions/{id}")
     @PreAuthorize("hasRole('ROLE_MANAGER')")

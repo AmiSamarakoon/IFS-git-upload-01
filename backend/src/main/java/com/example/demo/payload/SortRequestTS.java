@@ -3,10 +3,14 @@ package com.example.demo.payload;
 
 import java.util.Date;
 
-public class SortRequest {
+public class SortRequestTS {
+
+
     private Date selectedDate;
     private String deliveryMethod;
     private String ifsVersion;
+
+
 
     public Date getSelectedDate() {
         return selectedDate;

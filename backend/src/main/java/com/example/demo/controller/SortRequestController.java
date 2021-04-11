@@ -1,11 +1,12 @@
 package com.example.demo.controller;
 
 import com.example.demo.dao.TrainingSessionDao;
+import com.example.demo.dao.VirtualMachineDao;
 import com.example.demo.model.TrainingSession;
-import com.example.demo.payload.SortRequest;
-import com.example.demo.repository.TrainingSessionRepository;
+import com.example.demo.model.VirtualMachine;
+import com.example.demo.payload.SortRequestTS;
+import com.example.demo.payload.SortRequestVM;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,10 +19,18 @@ public class SortRequestController {
     @Autowired
     TrainingSessionDao trainingSessionDao;
 
-    @PostMapping("/trainingSessions")
+    @Autowired
+    VirtualMachineDao virtualMachineDao;
 
-    public List<TrainingSession> userAccess(@RequestBody SortRequest request) {
+    @PostMapping("/trainingSessions")
+    public List<TrainingSession> sortTrainingSessions(@RequestBody SortRequestTS request) {
         List<TrainingSession> data = trainingSessionDao.findData(request);
+        return data;
+    }
+
+    @PostMapping("/virtualMachines")
+    public List<VirtualMachine> sortVirtualMachines(@RequestBody SortRequestVM request) {
+        List<VirtualMachine> data = virtualMachineDao.findData(request);
         return data;
     }
 }

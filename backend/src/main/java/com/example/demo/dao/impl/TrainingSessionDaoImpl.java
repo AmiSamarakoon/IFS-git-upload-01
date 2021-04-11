@@ -2,7 +2,7 @@ package com.example.demo.dao.impl;
 
 import com.example.demo.dao.TrainingSessionDao;
 import com.example.demo.model.TrainingSession;
-import com.example.demo.payload.SortRequest;
+import com.example.demo.payload.SortRequestTS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +16,7 @@ public class TrainingSessionDaoImpl implements TrainingSessionDao {
     @Autowired
     private EntityManager entityManager;
     @Override
-    public List<TrainingSession> findData(SortRequest request) {
+    public List<TrainingSession> findData(SortRequestTS request) {
         String queryStr = "SELECT t\n" +
                 "FROM TrainingSession t\n" +
                 "where \n" +

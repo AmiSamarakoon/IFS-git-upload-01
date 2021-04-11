@@ -111,9 +111,11 @@ public class TrainingSessionController {
         trainingSession.setBufferTime(trainingSessionDetails.getBufferTime());
         trainingSession.setIfsApplicationVersion(trainingSessionDetails.getIfsApplicationVersion());
         trainingSession.setManagerComment(trainingSessionDetails.getManagerComment());
-        trainingSession.setDeliveryMethod(trainingSessionDetails.getDeliveryMethod());
+        trainingSession.setDeliveryMethod(trainingSessionDetails.getDeliveryMethod());*/
 
-        trainingSession.setVirtualMachines(trainingSessionDetails.getVirtualMachines());*/
+        trainingSession.setVirtualMachines(trainingSessionDetails.getVirtualMachines());
+
+        System.out.println(trainingSession.toString());
 
 
         TrainingSession updateTrainingSession = trainingSessionRepository.save(trainingSession);

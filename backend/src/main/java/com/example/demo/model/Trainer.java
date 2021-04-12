@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "trainer")
+@Table(name = "trainer" )
 public class Trainer {
 
 
@@ -16,7 +16,7 @@ public class Trainer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long trainerId;
 
-    @Column(name = "name")
+    @Column(name = "name" , unique=true,nullable = false)
     private  String name;
 
     @Column(name = "Type")

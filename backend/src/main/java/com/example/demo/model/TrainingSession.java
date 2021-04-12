@@ -58,6 +58,23 @@ public class TrainingSession {
     @Column(name = "type")
     private String type;
 
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "location_id", referencedColumnName = "id")
+    private Location location;
+
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "trainingRoom_id", referencedColumnName = "id")
+    private TrainingRoom trainingRoom;
+
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "trainingCordinator_id", referencedColumnName = "id")
+    private TrainingCordinator trainingCordinator;
+
+
+
     public String getType() {
         return type;
     }

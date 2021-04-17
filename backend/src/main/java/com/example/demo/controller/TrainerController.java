@@ -56,10 +56,6 @@ public class TrainerController {
 
 
 
-
-
-
-
         for(int i=0 ; i<trainers.size() ; i++){
 
             int availability = 1; // if one day is busy it will show 0

@@ -81,21 +81,10 @@ public class TrainingSessionController {
     @PutMapping("/trainingSessions/{id}")
 
     public ResponseEntity<TrainingSession> updateTrainingSession(@PathVariable Long id, @RequestBody TrainingSession trainingSessionDetails) {
-        TrainingSession trainingSession = trainingSessionRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Training Session Not Found")
-                );
-        trainingSession.setSessionName(trainingSessionDetails.getSessionName());
-        trainingSession.setStartDate(trainingSessionDetails.getStartDate());
-        trainingSession.setDuration(trainingSessionDetails.getDuration());
-        trainingSession.setMaxParticipants(trainingSessionDetails.getMaxParticipants());
-        trainingSession.setBufferTime(trainingSessionDetails.getBufferTime());
-        trainingSession.setIfsApplicationVersion(trainingSessionDetails.getIfsApplicationVersion());
-        trainingSession.setManagerComment(trainingSessionDetails.getManagerComment());
-        trainingSession.setDeliveryMethod(trainingSessionDetails.getDeliveryMethod());
+        trainingSessionService.updateTrainingSession(trainingSessionDetails , id);
 
 
-        TrainingSession updateTrainingSession = trainingSessionRepository.save(trainingSession);
-        return ResponseEntity.ok(updateTrainingSession);
+        return ResponseEntity.ok(trainingSessionDetails);
 
     }
 

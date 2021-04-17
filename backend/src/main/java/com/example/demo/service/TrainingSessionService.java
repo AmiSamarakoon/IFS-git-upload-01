@@ -13,7 +13,7 @@ public interface TrainingSessionService {
 
 	public TrainingSession getTrainingSession(String theId);
 
-	public void updateTrainingSession(TrainingSession trainingSession, String sessionId);
+	public void updateTrainingSession(TrainingSession trainingSession, Long id);
 
 
 }

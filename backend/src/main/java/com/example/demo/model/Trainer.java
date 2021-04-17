@@ -174,14 +174,14 @@ public class Trainer {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}
     )
     @JsonIgnoreProperties("trainer")
-    private List<LeaveApplication> leaveApplications;
+    private List<Leave> leaveApplications;
 
 
-    public List<LeaveApplication> getLeaveApplications() {
+    public List<Leave> getLeaveApplications() {
         return leaveApplications;
     }
 
-    public void setLeaveApplications(List<LeaveApplication> leaveApplications) {
+    public void setLeaveApplications(List<Leave> leaveApplications) {
         this.leaveApplications = leaveApplications;
     }
 

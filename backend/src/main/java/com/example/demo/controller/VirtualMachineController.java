@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.model.TrainingSession;
 import com.example.demo.model.VirtualMachine;
 import com.example.demo.repository.VirtualMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,6 +118,15 @@ public class VirtualMachineController {
         VirtualMachine virtualMachine = virtualMachineRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Virtual Machine Not Found"));
         return ResponseEntity.ok(virtualMachine);
+    }
+
+    @PutMapping("/virtualMachines/{id}")
+    public ResponseEntity<VirtualMachine> updateVirtualMachine(@PathVariable Long id, @RequestBody VirtualMachine virtualMachine) {
+        virtualMachineRepository.save(virtualMachine);
+
+
+        return ResponseEntity.ok(virtualMachine);
+
     }
 
     //delete virtual machine
